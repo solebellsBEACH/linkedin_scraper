@@ -42,22 +42,26 @@ class JobSearchScraper(BaseScraper):
         self,
         keywords: Optional[str] = None,
         location: Optional[str] = None,
-        limit: int = 25
+        limit: int = 25,
+        easy_apply: bool = False,
+        remote: bool = False,
     ) -> List[str]:
         """
         Search for jobs on LinkedIn.
-        
+
         Args:
             keywords: Job search keywords (e.g., "software engineer")
             location: Job location (e.g., "San Francisco, CA")
             limit: Maximum number of job URLs to return
-            
+            easy_apply: Filter for Easy Apply jobs only
+            remote: Filter for remote jobs only
+
         Returns:
             List of job posting URLs
         """
-        logger.info(f"Starting job search: keywords='{keywords}', location='{location}'")
-        
-        search_url = self._build_search_url(keywords, location)
+        logger.info(f"Starting job search: keywords='{keywords}', location='{location}', easy_apply={easy_apply}, remote={remote}")
+
+        search_url = self._build_search_url(keywords, location, easy_apply, remote)
         await self.callback.on_start("JobSearch", search_url)
         
         await self.navigate_and_wait(search_url)
@@ -85,17 +89,23 @@ class JobSearchScraper(BaseScraper):
     def _build_search_url(
         self,
         keywords: Optional[str] = None,
-        location: Optional[str] = None
+        location: Optional[str] = None,
+        easy_apply: bool = False,
+        remote: bool = False,
     ) -> str:
         """Build LinkedIn job search URL with parameters."""
         base_url = "https://www.linkedin.com/jobs/search/"
-        
+
         params = {}
         if keywords:
             params['keywords'] = keywords
         if location:
             params['location'] = location
-        
+        if easy_apply:
+            params['f_LF'] = 'f_AL'
+        if remote:
+            params['f_WT'] = '2'
+
         if params:
             return f"{base_url}?{urlencode(params)}"
         return base_url

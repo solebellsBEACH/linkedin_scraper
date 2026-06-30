@@ -1,45 +1,58 @@
+# ── Editor ────────────────────────────────────────────────────────────────────
 *.swp
-linkedin_user_scraper.egg-info
-linkedin_scraper.egg-info
-dist
-build
-__pycache__
-*.pyc
-chromedriver
+*.swo
 .DS_Store
 .vscode/
-.env/
-scrape.py
-creds.json
-venv
-*.zip
-.env
+.idea/
 
-# Test outputs
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+
+# ── Virtual environments ──────────────────────────────────────────────────────
+.venv/
+venv/
+.env/
+
+# ── Environment variables ─────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Credentials & sessions (NEVER commit) ────────────────────────────────────
+linkedin_session.json
+creds.json
+*.json.bak
+
+# ── Build artifacts ───────────────────────────────────────────────────────────
+dist/
+build/
+build-basic/
+dist-basic/
+*.egg-info/
+MANIFEST
+MANIFEST.ini
+
+# ── Test & cache ─────────────────────────────────────────────────────────────
+.pytest_cache/
 *.log
 test_*.db
 test_linkedin.db
+
+# ── Test outputs ──────────────────────────────────────────────────────────────
 test_summary.json
 results_*.json
 person_*.json
 *_improved.json
 
-# Debug scripts (keep debug_connection_selectors.py)
+# ── Debug scripts ─────────────────────────────────────────────────────────────
 debug_*.py
 !debug_connection_selectors.py
 
-# Backup files
-*_old.py
+# ── Misc ──────────────────────────────────────────────────────────────────────
+*.zip
 *.backup
-
-# Session files (sensitive cookies)
-linkedin_session.json
-
-# Build artifacts
-MANIFEST
-MANIFEST.ini
-.pytest_cache/
-
-# Basic package build artifacts
-build-basic/
-dist-basic/
+*_old.py
+chromedriver
+scrape.py
